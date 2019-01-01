@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Bookapi'),
 
     /*
     |--------------------------------------------------------------------------
@@ -228,4 +228,6 @@ return [
 
     ],
 
+    'api_url' => 'https://www.googleapis.com/books/v1/volumes',
+    'api_url_mask' => '%s?q=%s',
 ];

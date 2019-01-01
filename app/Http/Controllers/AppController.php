@@ -31,7 +31,7 @@ class AppController extends Controller
             $service = new Service();
 
             $fetcher = new Downloader();
-            $fetcher->setUrl(sprintf('https://www.googleapis.com/books/v1/volumes?q=%s', $request->search));
+            $fetcher->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $request->search));
             $service->setFetcher($fetcher);
 
             $data = $service->getData();
