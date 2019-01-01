@@ -22,6 +22,10 @@ class Response
 
     public function __toString()
     {
-        return json_encode($this);
+        if ( ! $this->status) {
+            return json_encode($this);
+        }
+
+        return $this->data;
     }
 }

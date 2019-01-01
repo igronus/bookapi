@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Response;
+use App\Service;
+use App\Downloader;
 use Illuminate\Http\Request;
 
 /**
@@ -25,6 +27,18 @@ class AppController extends Controller
             return new Response(false, 'No search parameter');
         }
 
-        return new Response(true, sprintf('Search parameter get: %s', $request->search));
+        try {
+            $service = new Service();
+
+            $fetcher = new Downloader();
+            $fetcher->setUrl(sprintf('https://www.googleapis.com/books/v1/volumes?q=%s', $request->search));
+            $service->setFetcher($fetcher);
+
+            $data = $service->getData();
+        }  catch (\Exception $e) {
+            return new Response(false, $e->getMessage());
+        }
+
+        return new Response(true, $data);
     }
 }
