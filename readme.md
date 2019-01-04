@@ -26,3 +26,12 @@ cp .env.example .env
 ```
 
 After that set up web-server to serve laravel or start server with `php artisan serve`.
+
+## Fixing frontend build
+
+```
+rm -rf node_modules
+rm package-lock.json yarn.lock
+npm cache clear --force
+npm install
+```
