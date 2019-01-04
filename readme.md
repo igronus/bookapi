@@ -20,14 +20,18 @@ git clone git@github.com:igronus/bookapi.git
 cd bookapi
 composer install
 chown -R www-data:www-data storage
+cp .env.example .env
 php artisan cache:clear
 php artisan key:generate
-cp .env.example .env
 ```
 
 After that set up web-server to serve laravel or start server with `php artisan serve`.
 
-## Fixing frontend build
+## Frontend developing
+
+Just run `npm install` and `npm run dev` to build public/js/app.js.
+
+If it doesn't work, check you have latest stable npm and node installed and do the following:
 
 ```
 rm -rf node_modules
