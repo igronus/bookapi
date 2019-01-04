@@ -13,7 +13,15 @@ Requirements:
 - any modern framework (e.g. Symphony 3+)
 ```
 
+## Solution
+
+This project runs on laravel 5.5 on the backend and vue.js 2.5 on the frontend.
+
+Live demo is available at: http://bookapi.pellinen.ru/
+
 ## Installation
+
+Just follow next instructions:
 
 ```
 git clone git@github.com:igronus/bookapi.git
@@ -27,9 +35,9 @@ php artisan key:generate
 
 After that set up web-server to serve laravel or start server with `php artisan serve`.
 
-## Frontend developing
+### Frontend developing
 
-Just run `npm install` and `npm run dev` to build public/js/app.js.
+Run `npm install` and `npm run dev` to build public/js/app.js.
 
 If it doesn't work, check you have latest stable npm and node installed and do the following:
 
