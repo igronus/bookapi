@@ -8,6 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.Vuex = require('vuex');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17,6 +18,35 @@ window.Vue = require('vue');
 
 Vue.component('search', require('./components/Search.vue'));
 
+Vue.use(Vuex);
+const store = new Vuex.Store({
+    state: {
+        count: 0,
+        items: [],
+        fired: false,
+        search_string: 'test'
+    },
+    mutations: {
+        clear (state) {
+            state.items = [];
+            state.fired = false;
+            state.total = 0;
+
+            console.log('Store cleared.');
+        },
+
+        populate (state, {items, total}) {
+            state.fired = true;
+            state.items = items;
+            state.total = total;
+
+            console.log('Store populated.');
+        },
+    }
+});
+
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });
