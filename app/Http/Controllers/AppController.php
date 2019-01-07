@@ -31,9 +31,9 @@ class AppController extends Controller
         try {
             $service = new Service();
 
-            $fetcher = new Downloader();
-            $fetcher->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $request->search));
-            $service->setDownloader($fetcher);
+            $downloader = new Downloader();
+            $downloader->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $request->search));
+            $service->setDownloader($downloader);
 
             $cacher = new Cacher();
             $service->setCacher($cacher);
