@@ -47,3 +47,6 @@ rm package-lock.json yarn.lock
 npm cache clear --force
 npm install
 ```
+### Testing
+
+Execute `./vendor/bin/phpunit` to test project components.
