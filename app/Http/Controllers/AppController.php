@@ -32,7 +32,7 @@ class AppController extends Controller
 
             $fetcher = new Downloader();
             $fetcher->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $request->search));
-            $service->setFetcher($fetcher);
+            $service->setDownloader($fetcher);
 
             $data = $service->getData();
         }  catch (\Exception $e) {

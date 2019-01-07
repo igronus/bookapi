@@ -11,7 +11,7 @@ class Service implements ServiceInterface
 {
     private $downloader;
 
-    public function setFetcher(DownloaderInterface $f) {
+    public function setDownloader(DownloaderInterface $f) {
         $this->downloader = $f;
     }
 

@@ -12,7 +12,19 @@ class Downloader implements DownloaderInterface
     private $url;
 
     public function setUrl($url) {
-        $this->url = $url;
+        $this->url = $this->escapeUrl($url);
+    }
+
+
+    /**
+     * URL escaping
+     *
+     * @param string url
+     *
+     * @return string
+     */
+    private function escapeUrl($url) {
+        return str_replace(' ', '%20', $url);
     }
 
 
@@ -24,7 +36,7 @@ class Downloader implements DownloaderInterface
      */
     function download() {
         if ( ! $this->url) {
-            throw new \Exception('Fetcher: No path specified');
+            throw new \Exception('Downloader: No path specified');
         }
 
 
@@ -32,7 +44,7 @@ class Downloader implements DownloaderInterface
         $content = @file_get_contents($this->url);
 
         if ( ! $content) {
-            throw new \Exception(sprintf('Fetcher: No content at %s', $this->url));
+            throw new \Exception(sprintf('Downloader: No content at %s', $this->url));
         }
 
 
