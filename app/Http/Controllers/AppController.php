@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cacher;
 use App\Response;
 use App\Service;
 use App\Downloader;
@@ -34,7 +35,10 @@ class AppController extends Controller
             $fetcher->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $request->search));
             $service->setDownloader($fetcher);
 
-            $data = $service->getData();
+            $cacher = new Cacher();
+            $service->setCacher($cacher);
+
+            $data = $service->getData($request->search);
         }  catch (\Exception $e) {
             return new Response(false, $e->getMessage());
         }
