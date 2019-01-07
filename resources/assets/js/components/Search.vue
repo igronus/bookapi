@@ -1,17 +1,23 @@
 <template>
     <div>
         <div>
-            <input placeholder="search here" v-model="search_string">
+            <input placeholder="search here, e.g. 'Gianni Rodari'" v-model="search_string">
             <button @click="search">
                 search
             </button>
 
             <div v-if="this.$store.state.fired">
-                <ul>
-                    <li v-for="item in this.$store.state.items">
-                        {{ item.id }}
-                    </li>
-                </ul>
+                <div v-for="item in this.$store.state.items">
+                    &nbsp;<br>
+                    ID: {{ item.id }}<br>
+                    Title: {{ item.volumeInfo.title }}<br>
+                    Authors: {{ item.volumeInfo.authors }}<br>
+                    Publisher: {{ item.volumeInfo.publisher }}<br>
+                    Published Date: {{ item.volumeInfo.publishedDate }}<br>
+                    <span v-if="item.volumeInfo.imageLinks">
+                        Image: <img :src="item.volumeInfo.imageLinks.thumbnail"><br>
+                    </span>
+                </div>
 
                 {{ this.$store.state.items.length }}/{{ this.$store.state.total }}
             </div>
@@ -23,7 +29,7 @@
     export default {
         data: function() {
             return  {
-                search_string: 'test'
+                search_string: ''
             }
         },
 
@@ -39,6 +45,10 @@
                         if (response.data.status === false) {
                             alert(response.data.data);
                             return false;
+                        }
+
+                        if ( ! response.data.items) {
+                            response.data.items = [];
                         }
 
                         this.$store.commit('populate', {items: response.data.items, total: response.data.totalItems});

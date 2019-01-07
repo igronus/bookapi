@@ -999,17 +999,11 @@ var store = new Vuex.Store({
     },
     mutations: {
         clear: function clear(state) {
-            // state.count = 0;
             state.items = [];
             state.fired = false;
             state.total = 0;
 
             console.log('Store cleared.');
-        },
-        increment: function increment(state) {
-            state.count++;
-
-            console.log('Store count incremented.');
         },
         populate: function populate(state, _ref) {
             var items = _ref.items,
@@ -1018,23 +1012,15 @@ var store = new Vuex.Store({
             state.fired = true;
             state.items = items;
             state.total = total;
-            // state.count = items.length;
 
             console.log('Store populated.');
         }
     }
 });
 
-// function search () {
-//     console.log(123);
-// };
-
 var app = new Vue({
     el: '#app',
     store: store
-    // data: {
-    //     search_string: ''
-    // }
 });
 
 /***/ }),
@@ -44404,11 +44390,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            search_string: 'test'
+            search_string: ''
         };
     },
 
@@ -44422,45 +44414,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         search: function search() {
             var _this = this;
 
-            // axios.get('/search?search=' + this.$store.state.search_string)
-            axios.get('/search?search=' + this.search_string)
-            // .then(function (response) {
-            //     // timetracker.state = response.data.status;
-            //
-            //     if (response.data.status === false) {
-            //         alert(response.data.data);
-            //         return false;
-            //     }
-            //
-            //     this.$store.commit('increment');
-            //     return true;
-            // })
-            .then(function (response) {
+            axios.get('/search?search=' + this.search_string).then(function (response) {
                 if (response.data.status === false) {
                     alert(response.data.data);
                     return false;
                 }
 
-                // this.$store.commit('increment');
+                if (!response.data.items) {
+                    response.data.items = [];
+                }
+
                 _this.$store.commit('populate', { items: response.data.items, total: response.data.totalItems });
                 return true;
             }).catch(function (error) {
-                // timetracker.state = 'error';
                 alert(error);
             });
 
             console.log('Search fired.');
         }
     }
-    // data: function() {
-    //     return
-    //     search_string: 'test'
-    // }
-
-    // function search () {
-    //     console.log(123);
-    // };
-
 });
 
 /***/ }),
@@ -44482,7 +44454,7 @@ var render = function() {
             expression: "search_string"
           }
         ],
-        attrs: { placeholder: "search here" },
+        attrs: { placeholder: "search here, e.g. 'Gianni Rodari'" },
         domProps: { value: _vm.search_string },
         on: {
           input: function($event) {
@@ -44499,29 +44471,56 @@ var render = function() {
       ]),
       _vm._v(" "),
       this.$store.state.fired
-        ? _c("div", [
-            _c(
-              "ul",
+        ? _c(
+            "div",
+            [
               _vm._l(this.$store.state.items, function(item) {
-                return _c("li", [
+                return _c("div", [
+                  _vm._v("\n                 "),
+                  _c("br"),
+                  _vm._v("\n                ID: " + _vm._s(item.id)),
+                  _c("br"),
                   _vm._v(
-                    "\n                    " +
-                      _vm._s(item.id) +
-                      "\n                "
-                  )
+                    "\n                Title: " + _vm._s(item.volumeInfo.title)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                Authors: " +
+                      _vm._s(item.volumeInfo.authors)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                Publisher: " +
+                      _vm._s(item.volumeInfo.publisher)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                Published Date: " +
+                      _vm._s(item.volumeInfo.publishedDate)
+                  ),
+                  _c("br"),
+                  _vm._v(" "),
+                  item.volumeInfo.imageLinks
+                    ? _c("span", [
+                        _vm._v("\n                    Image: "),
+                        _c("img", {
+                          attrs: { src: item.volumeInfo.imageLinks.thumbnail }
+                        }),
+                        _c("br")
+                      ])
+                    : _vm._e()
                 ])
               }),
-              0
-            ),
-            _vm._v(" "),
-            _vm._v(
-              "\n            " +
-                _vm._s(this.$store.state.items.length) +
-                "/" +
-                _vm._s(this.$store.state.total) +
-                "\n        "
-            )
-          ])
+              _vm._v(
+                "\n\n            " +
+                  _vm._s(this.$store.state.items.length) +
+                  "/" +
+                  _vm._s(this.$store.state.total) +
+                  "\n        "
+              )
+            ],
+            2
+          )
         : _vm._e()
     ])
   ])
