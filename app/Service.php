@@ -24,16 +24,18 @@ class Service implements ServiceInterface
 
 
     /**
-     * Getting data (without caching yet).
+     * Getting data (with caching if cacher exists).
      *
      * @return string
      * @throws \Exception
      */
-    public function getData($request)
+    public function getData($request, $page)
     {
         if ($this->cacher) {
-            if ($this->cacher->get($request) !== null) {
-                return $this->cacher->get($request);
+            $key = sprintf('%s_%s', $request, $page);
+
+            if ($this->cacher->get($key) !== null) {
+                return $this->cacher->get($key);
             }
         }
 
@@ -43,10 +45,10 @@ class Service implements ServiceInterface
         }
 
 
-        $data = $this->downloader->download($request);
+        $data = $this->downloader->download($key);
 
         if ($this->cacher) {
-            $this->cacher->put($request, $data);
+            $this->cacher->put($key, $data);
         }
 
         return $data;

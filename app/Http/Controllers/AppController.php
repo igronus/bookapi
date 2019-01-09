@@ -29,16 +29,19 @@ class AppController extends Controller
         }
 
         try {
+            $search = $request->search;
+            $page = $request->page ?: 0;
+
             $service = new Service();
 
             $downloader = new Downloader();
-            $downloader->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $request->search));
+            $downloader->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $search, $page*10));
             $service->setDownloader($downloader);
 
             $cacher = new Cacher();
             $service->setCacher($cacher);
 
-            $data = $service->getData($request->search);
+            $data = $service->getData($search, $page);
         }  catch (\Exception $e) {
             return new Response(false, $e->getMessage());
         }

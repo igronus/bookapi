@@ -9,5 +9,5 @@ namespace App;
  */
 interface ServiceInterface
 {
-    public function getData($request);
+    public function getData($request, $page);
 }

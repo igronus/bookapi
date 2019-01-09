@@ -229,5 +229,5 @@ return [
     ],
 
     'api_url' => 'https://www.googleapis.com/books/v1/volumes',
-    'api_url_mask' => '%s?q=%s',
+    'api_url_mask' => '%s?q=%s&startIndex=%s',
 ];
