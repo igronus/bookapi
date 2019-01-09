@@ -42,11 +42,11 @@ Run `npm ci` to install dependencies and `npm run dev` to build public/js/app.js
 If it doesn't work, check you have latest stable npm and node installed and do the following:
 
 ```
-rm -rf node_modules
-rm package-lock.json yarn.lock
+rm -rf node_modules package-lock.json
 npm cache clear --force
 npm install
 ```
+
 ### Testing
 
 Execute `./vendor/bin/phpunit` to test project components.
