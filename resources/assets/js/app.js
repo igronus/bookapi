@@ -21,13 +21,14 @@ Vue.component('search', require('./components/Search.vue'));
 Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
-        count: 0,
+        page: 0,
         items: [],
         fired: false,
         search_string: 'test'
     },
     mutations: {
         clear (state) {
+            state.page = 0;
             state.items = [];
             state.fired = false;
             state.total = 0;
@@ -37,8 +38,10 @@ const store = new Vuex.Store({
 
         populate (state, {items, total}) {
             state.fired = true;
-            state.items = items;
+            // state.items = items;
+            state.items = state.items.concat(items);
             state.total = total;
+            state.page++;
 
             console.log('Store populated.');
         },

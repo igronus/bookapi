@@ -2,7 +2,7 @@
     <div>
         <div>
             <input placeholder="search here, e.g. 'Gianni Rodari'" v-model="search_string">
-            <button @click="search">
+            <button @click="clear_and_search">
                 search
             </button>
 
@@ -19,7 +19,11 @@
                     </span>
                 </div>
 
-                {{ this.$store.state.items.length }}/{{ this.$store.state.total }}
+                <button @click="search">
+                    more...
+                </button>
+
+                {{ this.$store.state.items.length }}/{{ this.$store.state.total }} (page {{ this.$store.state.page }})
             </div>
         </div>
     </div>
@@ -39,8 +43,12 @@
             this.$store.commit('clear');
         },
         methods: {
+            clear_and_search() {
+                this.$store.commit('clear');
+                this.search();
+            },
             search() {
-                axios.get('/search?search=' + this.search_string)
+                axios.get('/search?search=' + this.search_string + '&page=' + this.$store.state.page)
                     .then(response => {
                         if (response.data.status === false) {
                             alert(response.data.data);

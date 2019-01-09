@@ -992,13 +992,14 @@ Vue.component('search', __webpack_require__(39));
 Vue.use(Vuex);
 var store = new Vuex.Store({
     state: {
-        count: 0,
+        page: 0,
         items: [],
         fired: false,
         search_string: 'test'
     },
     mutations: {
         clear: function clear(state) {
+            state.page = 0;
             state.items = [];
             state.fired = false;
             state.total = 0;
@@ -1010,8 +1011,10 @@ var store = new Vuex.Store({
                 total = _ref.total;
 
             state.fired = true;
-            state.items = items;
+            // state.items = items;
+            state.items = state.items.concat(items);
             state.total = total;
+            state.page++;
 
             console.log('Store populated.');
         }
@@ -44396,6 +44399,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44411,10 +44418,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        clear_and_search: function clear_and_search() {
+            this.$store.commit('clear');
+            this.search();
+        },
         search: function search() {
             var _this = this;
 
-            axios.get('/search?search=' + this.search_string).then(function (response) {
+            axios.get('/search?search=' + this.search_string + '&page=' + this.$store.state.page).then(function (response) {
                 if (response.data.status === false) {
                     alert(response.data.data);
                     return false;
@@ -44466,7 +44477,7 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("button", { on: { click: _vm.search } }, [
+      _c("button", { on: { click: _vm.clear_and_search } }, [
         _vm._v("\n            search\n        ")
       ]),
       _vm._v(" "),
@@ -44511,12 +44522,18 @@ var render = function() {
                     : _vm._e()
                 ])
               }),
+              _vm._v(" "),
+              _c("button", { on: { click: _vm.search } }, [
+                _vm._v("\n                more...\n            ")
+              ]),
               _vm._v(
                 "\n\n            " +
                   _vm._s(this.$store.state.items.length) +
                   "/" +
                   _vm._s(this.$store.state.total) +
-                  "\n        "
+                  " (page " +
+                  _vm._s(this.$store.state.page) +
+                  ")\n        "
               )
             ],
             2
