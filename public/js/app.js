@@ -44456,30 +44456,44 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.search_string,
-            expression: "search_string"
-          }
-        ],
-        attrs: { placeholder: "search here, e.g. 'Gianni Rodari'" },
-        domProps: { value: _vm.search_string },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.clear_and_search($event)
             }
-            _vm.search_string = $event.target.value
           }
-        }
-      }),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.clear_and_search } }, [
-        _vm._v("\n            search\n        ")
-      ]),
+        },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search_string,
+                expression: "search_string"
+              }
+            ],
+            attrs: {
+              type: "text",
+              placeholder: "Search here, e.g. 'Gianni Rodari'"
+            },
+            domProps: { value: _vm.search_string },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search_string = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("input", { attrs: { type: "submit", value: "search" } })
+        ]
+      ),
       _vm._v(" "),
       this.$store.state.fired
         ? _c(
@@ -44523,9 +44537,11 @@ var render = function() {
                 ])
               }),
               _vm._v(" "),
-              _c("button", { on: { click: _vm.search } }, [
-                _vm._v("\n                more...\n            ")
-              ]),
+              this.$store.state.items.length < this.$store.state.total
+                ? _c("button", { on: { click: _vm.search } }, [
+                    _vm._v("\n                Load more\n            ")
+                  ])
+                : _vm._e(),
               _vm._v(
                 "\n\n            " +
                   _vm._s(this.$store.state.items.length) +

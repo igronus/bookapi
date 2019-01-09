@@ -1,10 +1,10 @@
 <template>
     <div>
         <div>
-            <input placeholder="search here, e.g. 'Gianni Rodari'" v-model="search_string">
-            <button @click="clear_and_search">
-                search
-            </button>
+            <form v-on:submit.prevent="clear_and_search">
+                <input type="text" placeholder="Search here, e.g. 'Gianni Rodari'" v-model="search_string">
+                <input type="submit" value="search">
+            </form>
 
             <div v-if="this.$store.state.fired">
                 <div v-for="item in this.$store.state.items">
@@ -19,8 +19,8 @@
                     </span>
                 </div>
 
-                <button @click="search">
-                    more...
+                <button @click="search" v-if="this.$store.state.items.length < this.$store.state.total">
+                    Load more
                 </button>
 
                 {{ this.$store.state.items.length }}/{{ this.$store.state.total }} (page {{ this.$store.state.page }})
