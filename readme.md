@@ -37,7 +37,7 @@ After that set up web-server to serve laravel or start server with `php artisan 
 
 ### Frontend developing
 
-Run `npm install` and `npm run dev` to build public/js/app.js.
+Run `npm ci` to install dependencies and `npm run dev` to build public/js/app.js.
 
 If it doesn't work, check you have latest stable npm and node installed and do the following:
 
