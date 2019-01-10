@@ -1,30 +1,32 @@
 <template>
     <div>
-        <div>
-            <form v-on:submit.prevent="clear_and_search">
-                <input type="text" placeholder="Search here, e.g. 'Gianni Rodari'" v-model="search_string">
-                <input type="submit" value="search">
-            </form>
+        <form v-on:submit.prevent="clear_and_search">
+            <input type="text" placeholder="Search here, e.g. 'Gianni Rodari'" v-model="search_string">
+            <input type="submit" value="Search">
+        </form>
 
-            <div v-if="this.$store.state.fired">
-                <div v-for="item in this.$store.state.items">
-                    &nbsp;<br>
-                    ID: {{ item.id }}<br>
-                    Title: {{ item.volumeInfo.title }}<br>
-                    Authors: {{ item.volumeInfo.authors }}<br>
-                    Publisher: {{ item.volumeInfo.publisher }}<br>
-                    Published Date: {{ item.volumeInfo.publishedDate }}<br>
-                    <span v-if="item.volumeInfo.imageLinks">
-                        Image: <img :src="item.volumeInfo.imageLinks.thumbnail"><br>
-                    </span>
+        <div v-if="this.$store.state.fired" class="row">
+            <div v-for="item in this.$store.state.items" class="col-lg-3 spaced">
+                <div class="card">
+                    <img v-if="item.volumeInfo.imageLinks" :src="item.volumeInfo.imageLinks.thumbnail" class="card-img-top" :alt="item.id">
+                    <h2>{{ item.volumeInfo.title }}</h2>
+                    <i>{{ item.volumeInfo.authors }}</i><br>
+                    Published on {{ item.volumeInfo.publishedDate }}<br>
+                    by {{ item.volumeInfo.publisher }}
+
+                    <a v-if="item.saleInfo && item.saleInfo.buyLink" :href="item.saleInfo.buyLink" target="_blank">
+                        <b>BUY NOW</b>
+                    </a>
                 </div>
-
-                <button @click="search" v-if="this.$store.state.items.length < this.$store.state.total">
-                    Load more
-                </button>
-
-                {{ this.$store.state.items.length }}/{{ this.$store.state.total }} (page {{ this.$store.state.page }})
             </div>
+        </div>
+
+        <div v-if="this.$store.state.fired">
+            <button @click="search" v-if="this.$store.state.items.length < this.$store.state.total">
+                Load more
+            </button>
+
+            {{ this.$store.state.items.length }}/{{ this.$store.state.total }} (page {{ this.$store.state.page }})
         </div>
     </div>
 </template>
