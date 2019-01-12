@@ -33,6 +33,6 @@
         <script src="/manual/jquery.min.js"></script>
         <script src="/manual/bootstrap.bundle.min.js"></script>
 
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
