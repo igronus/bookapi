@@ -35,6 +35,13 @@ php artisan key:generate
 
 After that set up web-server to serve laravel or start server with `php artisan serve`.
 
+You can change cache using and it's timeout in .env file.
+
+```
+DOWNLOADER_CACHE=true
+DOWNLOADER_CACHE_TIMEOUT=5
+``` 
+
 ### Frontend developing
 
 Run `npm ci` to install dependencies and `npm run dev` to build public/js/app.js.

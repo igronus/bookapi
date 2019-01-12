@@ -38,8 +38,11 @@ class AppController extends Controller
             $downloader = new Downloader();
             $downloader->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $search, $page*10));
 
-            $cacher = new Cacher();
-            $downloader->setCacher($cacher);
+            if (env('DOWNLOADER_CACHE')) {
+                $cacher = new Cacher(env('DOWNLOADER_CACHE_TIMEOUT'));
+                $downloader->setCacher($cacher);
+
+            }
             $service->setDownloader($downloader);
 
             $mapper = new \JsonMapper();
