@@ -32,6 +32,7 @@ class AppController extends Controller
             $search = $request->search;
             $page = $request->page ?: 0;
 
+
             $service = new Service();
 
             $downloader = new Downloader();
@@ -39,8 +40,13 @@ class AppController extends Controller
 
             $cacher = new Cacher();
             $downloader->setCacher($cacher);
-
             $service->setDownloader($downloader);
+
+            $mapper = new \JsonMapper();
+            $mapper->undefinedPropertyHandler = '\App\Book::setUndefinedProperty';
+            $mapper->bExceptionOnMissingData = true;
+            $service->setMapper($mapper);
+
             $data = $service->getData($search, $page);
         }  catch (\Exception $e) {
             return new Response(false, $e->getMessage());

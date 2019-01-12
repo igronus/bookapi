@@ -32306,36 +32306,30 @@ var render = function() {
           _vm._l(this.$store.state.items, function(item) {
             return _c("div", { staticClass: "col-lg-3 spaced" }, [
               _c("div", { staticClass: "card" }, [
-                item.volumeInfo.imageLinks
+                item.image
                   ? _c("img", {
                       staticClass: "card-img-top",
-                      attrs: {
-                        src: item.volumeInfo.imageLinks.thumbnail,
-                        alt: item.id
-                      }
+                      attrs: { src: item.image, alt: item.id }
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _c("h2", [_vm._v(_vm._s(item.volumeInfo.title))]),
+                _c("h2", [_vm._v(_vm._s(item.title))]),
                 _vm._v(" "),
-                _c("i", [_vm._v(_vm._s(item.volumeInfo.authors))]),
+                _c("i", [_vm._v(_vm._s(item.authors))]),
                 _c("br"),
                 _vm._v(
-                  "\n                Published on " +
-                    _vm._s(item.volumeInfo.publishedDate)
+                  "\n                Published on " + _vm._s(item.publishedDate)
                 ),
                 _c("br"),
                 _vm._v(
                   "\n                by " +
-                    _vm._s(item.volumeInfo.publisher) +
+                    _vm._s(item.publisher) +
                     "\n\n                "
                 ),
-                item.saleInfo && item.saleInfo.buyLink
+                item.buyLink
                   ? _c(
                       "a",
-                      {
-                        attrs: { href: item.saleInfo.buyLink, target: "_blank" }
-                      },
+                      { attrs: { href: item.buyLink, target: "_blank" } },
                       [_c("b", [_vm._v("BUY NOW")])]
                     )
                   : _vm._e()

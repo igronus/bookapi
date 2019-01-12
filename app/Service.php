@@ -16,6 +16,17 @@ class Service implements ServiceInterface
     }
 
 
+    private $mapper;
+
+    /**
+     * Should use proxy mapper interface later maybe, but this first version uses
+     * netresearch/jsonmapper only and map() method will fit in the future.
+     */
+    public function setMapper($m) {
+        $this->mapper = $m;
+    }
+
+
     /**
      * Getting data (with caching if cacher exists).
      *
@@ -28,9 +39,16 @@ class Service implements ServiceInterface
             throw new \Exception('Service: No url specified');
         }
 
+        if ( ! $this->mapper) {
+            throw new \Exception('Service: No datamapper specified');
+        }
+
 
         $data = $this->downloader->download();
 
-        return $data;
+        $r = new BookResponse();
+        $this->mapper->map(json_decode($data), $r);
+
+        return json_encode($r);
     }
 }

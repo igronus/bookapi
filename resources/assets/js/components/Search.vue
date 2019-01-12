@@ -8,13 +8,13 @@
         <div v-if="this.$store.state.fired" class="row">
             <div v-for="item in this.$store.state.items" class="col-lg-3 spaced">
                 <div class="card">
-                    <img v-if="item.volumeInfo.imageLinks" :src="item.volumeInfo.imageLinks.thumbnail" class="card-img-top" :alt="item.id">
-                    <h2>{{ item.volumeInfo.title }}</h2>
-                    <i>{{ item.volumeInfo.authors }}</i><br>
-                    Published on {{ item.volumeInfo.publishedDate }}<br>
-                    by {{ item.volumeInfo.publisher }}
+                    <img v-if="item.image" :src="item.image" class="card-img-top" :alt="item.id">
+                    <h2>{{ item.title }}</h2>
+                    <i>{{ item.authors }}</i><br>
+                    Published on {{ item.publishedDate }}<br>
+                    by {{ item.publisher }}
 
-                    <a v-if="item.saleInfo && item.saleInfo.buyLink" :href="item.saleInfo.buyLink" target="_blank">
+                    <a v-if="item.buyLink" :href="item.buyLink" target="_blank">
                         <b>BUY NOW</b>
                     </a>
                 </div>
