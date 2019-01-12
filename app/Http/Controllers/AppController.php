@@ -36,11 +36,11 @@ class AppController extends Controller
 
             $downloader = new Downloader();
             $downloader->setUrl(sprintf(config('app.api_url_mask'), config('app.api_url'), $search, $page*10));
-            $service->setDownloader($downloader);
 
             $cacher = new Cacher();
-            $service->setCacher($cacher);
+            $downloader->setCacher($cacher);
 
+            $service->setDownloader($downloader);
             $data = $service->getData($search, $page);
         }  catch (\Exception $e) {
             return new Response(false, $e->getMessage());
